@@ -31,7 +31,8 @@
   /* fonts */
   --font-josefin-sans: "Josefin Sans", sans-serif;
   --color-button: var(--purple-600);
-  --color-check: var(--color-gray-300)
+  --color-check: var(--color-gray-300);
+  --color-primary: var(--blue-primary);
 }
 
 .dark {

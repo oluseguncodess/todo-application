@@ -12,9 +12,10 @@ import Column from './Column';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useContext } from 'react';
 import { Storecontext } from '../contexts/store';
+import Status from './Status';
 
 export default function TaskManagement() {
-  const { tasks, handleDragEnd } = useContext(Storecontext);
+  const { handleDragEnd} = useContext(Storecontext);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -30,8 +31,9 @@ export default function TaskManagement() {
         onDragEnd={handleDragEnd}
         sensors={sensors}
       >
-        <Column tasks={tasks} />
+        <Column/>
       </DndContext>
+      <Status/>
     </div>
   );
 }
