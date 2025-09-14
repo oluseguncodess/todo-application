@@ -12,7 +12,7 @@ type TaskProps = {
 };
 
 export default function TaskItem({ title, id }: TaskProps) {
-  const { tasks, handleChangeStatus } = useContext(Storecontext);
+  const { tasks, handleChangeStatus, removeTask } = useContext(Storecontext);
   const [status, setStatus] = useState<string | undefined>(
     tasks.find((task) => task.id === id)?.status
   );
@@ -61,7 +61,7 @@ export default function TaskItem({ title, id }: TaskProps) {
             {title}
           </p>
         </div>
-        <X className='w-4.5' />
+        <X className='w-4.5' onClick={() => removeTask(id)} />
       </div>
       <hr className='w-full border-t-[0.5px] border-hr-background' />
     </div>

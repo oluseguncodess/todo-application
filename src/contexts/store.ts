@@ -7,6 +7,9 @@ interface IStoreContext {
   addTask: (title: string) => void
   handleChangeStatus: (status: string, id: number) => void
   handleDragEnd: (event: DragEndEvent) => void
+  removeTask: (id: number) => void
+  status: string
+  handleDisplayStatus: (status: string) => void
 }
 
 export const Storecontext = createContext<IStoreContext>({} as IStoreContext)
