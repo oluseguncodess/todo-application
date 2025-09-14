@@ -3,9 +3,11 @@ type Theme = 'light' | 'dark'
 
 interface ThemeContextI {
   theme: Theme
-  handleChangeTheme: (theme: Theme) => void;
+  handleChangeTheme: (theme: Theme) => void
+  handleToggleTheme: (theme: Theme) => void
 }
 export const ThemeContext = createContext<ThemeContextI>({
   theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
-  handleChangeTheme: () => {}
+  handleChangeTheme: () => {},
+  handleToggleTheme: () => {}
 })

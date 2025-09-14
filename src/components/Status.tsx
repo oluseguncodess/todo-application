@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { Storecontext } from '../contexts/store';
+import { useStoreContext } from '../contexts/hooks/useStoreContext';
 
 const statusNames = [
   { id: 1, status: 'All' },
@@ -8,7 +7,7 @@ const statusNames = [
 ];
 
 export default function Status() {
-  const { status, handleDisplayStatus } = useContext(Storecontext);
+  const { status, handleDisplayStatus } = useStoreContext()
   return (
     <div className='w-full justify-center items-center gap-8 flex p-4 bg-column-background rounded-[5px]'>
       {statusNames.map((statuss) => (

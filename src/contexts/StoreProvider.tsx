@@ -1,5 +1,5 @@
 import { useState, type PropsWithChildren } from 'react';
-import type { Task } from '../types/type';
+import type { Status, Task } from '../types/type';
 import { Storecontext } from './store';
 import type { DragEndEvent } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
@@ -15,7 +15,7 @@ const INITIAL_TASKS = [
 
 export default function Storeprovider({ children }: PropsWithChildren) {
   const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
-  const [status, setStatus] = useState<'All' | 'Active' | 'Completed'>('All')
+  const [status, setStatus] = useState<Status>('All')
 
   function addTask(title: string) {
     setTasks((tasks) => [

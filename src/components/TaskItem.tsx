@@ -3,8 +3,8 @@ import { X } from 'lucide-react';
 import Check from '../assets/images/icon-check.svg?react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { useContext, useState } from 'react';
-import { Storecontext } from '../contexts/store';
+import { useState } from 'react';
+import { useStoreContext } from '../contexts/hooks/useStoreContext';
 
 type TaskProps = {
   title: string;
@@ -12,7 +12,7 @@ type TaskProps = {
 };
 
 export default function TaskItem({ title, id }: TaskProps) {
-  const { tasks, handleChangeStatus, removeTask } = useContext(Storecontext);
+  const { tasks, handleChangeStatus, removeTask } = useStoreContext()
   const [status, setStatus] = useState<string | undefined>(
     tasks.find((task) => task.id === id)?.status
   );
@@ -22,7 +22,7 @@ export default function TaskItem({ title, id }: TaskProps) {
       ? 'bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))]'
       : '';
 
-  const { attributes, setNodeRef, transform, transition } = useSortable({ id });
+  const { attributes, setNodeRef, transform, transition, listeners} = useSortable({ id });
 
   const styles = {
     transition,
@@ -30,9 +30,7 @@ export default function TaskItem({ title, id }: TaskProps) {
   };
 
   function changeStatus() {
-    // find the task
     const task = tasks.find((task) => task.id === id);
-    // check it's status
     const newStatus = task?.status === 'completed' ? 'active' : 'completed';
     setStatus(newStatus);
     handleChangeStatus(newStatus, id);
@@ -40,23 +38,24 @@ export default function TaskItem({ title, id }: TaskProps) {
 
   return (
     <div
-      className={`flex flex-col relative`}
+      className={`flex flex-col relative w-full`}
       ref={setNodeRef}
       style={styles}
       {...attributes}
     >
-      <div className='flex justify-between items-center p-4 touch-none'>
-        <div className='flex gap-3 items-center justify-center'>
+      <div className='flex gap-3 justify-between items-center p-4 touch-none w-full'>
+        <div className='flex gap-3 items-center justify-start w-full'>
           <button
-            className={`w-5.5 h-5.5 rounded-full flex justify-center items-center ${checkBg} border-1 border-gray-500`}
+            className={`h-5.5 min-w-5.5 rounded-full flex justify-center items-center ${checkBg} border-1 border-gray-500`}
             onClick={() => changeStatus()}
           >
             {checkBg && <Check />}
           </button>
           <p
-            className={`cursor-grab active:cursor-grabbing ${
+            className={`cursor-grab active:cursor-grabbing w-full ${
               checkBg ? 'line-through text-check' : 'text-foreground'
-            }`}
+            }` }
+            {...listeners}
           >
             {title}
           </p>

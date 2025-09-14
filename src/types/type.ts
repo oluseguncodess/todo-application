@@ -3,3 +3,5 @@ export type Task = {
   title: string
   status: string
 }
+
+export type Status = 'All' | 'Active' | 'Completed';
