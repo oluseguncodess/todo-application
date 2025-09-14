@@ -1,8 +1,8 @@
-import { useContext, useState } from 'react';
-import { Storecontext } from '../contexts/store';
+import {  useState } from 'react';
+import { useStoreContext } from '../contexts/hooks/useStoreContext';
 
 export default function Input() {
-  const {addTask} = useContext(Storecontext)
+  const {addTask} = useStoreContext()
   const [input, setInput] = useState<string>('');
 
   function onSubmit(e: React.KeyboardEvent<HTMLInputElement>) {

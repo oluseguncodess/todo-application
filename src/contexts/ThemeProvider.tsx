@@ -1,4 +1,4 @@
-import { useState, useEffect, type PropsWithChildren } from 'react';
+import { useEffect, useState, type PropsWithChildren } from 'react';
 import { ThemeContext } from './ThemeContextt';
 
 type Theme = 'light' | 'dark'
@@ -8,23 +8,34 @@ export default function ThemeContextProvider({ children }: PropsWithChildren) {
     window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   );
 
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
   useEffect(() => {
-    const handleThemeChange = (e: MediaQueryListEvent) => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
       setTheme(e.matches ? 'dark' : 'light');
     };
 
-    mediaQuery.addEventListener('change', handleThemeChange);
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
 
-    document.documentElement.classList.toggle('dark', mediaQuery.matches);
+    return () => {
+      mediaQuery.removeEventListener('change', handleSystemThemeChange);
+    };
+  }, [theme])
 
-    return () => mediaQuery.removeEventListener('change', handleThemeChange);
-  }, [mediaQuery]);
+  function handleToggleTheme(theme: Theme) {
+    setTheme(theme);
+  }
 
   const ctxValue = {
     theme: theme,
-    handleChangeTheme: setTheme
+    handleChangeTheme: setTheme,
+    handleToggleTheme
   };
 
   return (
